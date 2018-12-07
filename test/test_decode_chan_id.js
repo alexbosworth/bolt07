@@ -13,7 +13,25 @@ const tests = [
     },
   },
   {
+    args: {id: '15fbe70000260000'},
+    description: 'Standard testnet channel id',
+    expected: {
+      block_height: 1440743,
+      block_index: 38,
+      output_index: 0,
+    },
+  },
+  {
     args: {number: '590587277833404417'},
+    description: 'Standard bitcoin channel id',
+    expected: {
+      block_height: 537136,
+      block_index: 2080,
+      output_index: 1,
+    },
+  },
+  {
+    args: {id: '0832300008200001'},
     description: 'Standard bitcoin channel id',
     expected: {
       block_height: 537136,
