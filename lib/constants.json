@@ -1,12 +1,14 @@
 {
   "blockIndexByteLen": 4,
   "blockIndexOffset": 1,
+  "chanDelimiter": "x",
   "decBase": 10,
   "endian": "be",
+  "heightByteIndex": 0,
   "heightByteLen": 4,
   "heightByteOffset": 1,
   "outputByteOffset": 0,
   "outputIndexByteLen": 2,
-  "rawChanIdLen": 8
+  "rawChanIdByteLen": 8
 }
 

@@ -9,8 +9,18 @@ const tests = [
     expected: {number: '1584113681139367936'},
   },
   {
+    args: {channel: '1440743x38x0'},
+    description: 'Standard testnet channel',
+    expected: {number: '1584113681139367936'},
+  },
+  {
     args: {id: '0832300008200001'},
     description: 'Standard bitcoin channel id',
+    expected: {number: '590587277833404417'},
+  },
+  {
+    args: {channel: '537136x2080x1'},
+    description: 'Standard bitcoin channel',
     expected: {number: '590587277833404417'},
   },
 ];
