@@ -14,6 +14,27 @@ Sample code for working with bolt07 utility functions:
 - Id: The raw channel id format specified by bolt07.
 - Number: Interpreting the raw channel id format as a uint64.
 
+### Chan Format
+
+    const {chanFormat} = require('bolt07');
+    
+    const id = '15fbe70000260000';
+    const number = '1584113681139367936';
+    
+    try {
+      const fromNumber = chanFormat({number}).channel;
+      // fromNumber === '1440743x38x0'
+    } catch (err) {
+      // valid channel, no error
+    }
+    
+    try {
+      const fromId = chanFormat({id}).channel;
+      // fromId === '1440743x38x0'
+    } catch (err) {
+      // valid id, no error
+    }
+
 ### Chan Number
 
     const {chanNumber} = require('bolt07');
@@ -34,7 +55,6 @@ Sample code for working with bolt07 utility functions:
     } catch (err) {
       // valid id, no error
     }
-    
 
 ### Decode Chan Id
 
