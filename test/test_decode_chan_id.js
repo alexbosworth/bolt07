@@ -33,10 +33,26 @@ const tests = [
     description: 'Standard bitcoin channel id',
     expected: {block_height: 537136, block_index: 2080, output_index: 1},
   },
+  {
+    args: {},
+    description: 'Id or channel or number is required',
+    error: 'ExpectedShortChannelIdToDecode',
+  },
+  {
+    args: {id: '00'},
+    description: 'Id needs to be correct length',
+    error: 'UnexpectedLengthOfShortChannelId',
+  },
 ];
 
-tests.forEach(({args, description, expected}) => {
-  return test(description, ({equal, end}) => {
+tests.forEach(({args, description, error, expected}) => {
+  return test(description, ({equal, end, throws}) => {
+    if (!!error) {
+      throws(() => decodeChanId(args), new Error(error), 'Got expected err');
+
+      return end();
+    }
+
     const decoded = decodeChanId(args);
 
     equal(decoded.block_height, expected.block_height, 'Block height derived');
@@ -46,4 +62,3 @@ tests.forEach(({args, description, expected}) => {
     return end();
   });
 });
-

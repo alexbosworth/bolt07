@@ -21,10 +21,31 @@ const tests = [
       number: '590587277833404417',
     },
   },
+  {
+    args: {},
+    description: 'Expected block height',
+    error: 'ExpectedBlockHeightForChannelId',
+  },
+  {
+    args: {block_height: 1440743},
+    description: 'Expected block index',
+    error: 'ExpectedBlockIndexForChannelId',
+  },
+  {
+    args: {block_height: 1440743, block_index: 2080},
+    description: 'Expected output index',
+    error: 'ExpectedTransactionOutputIndexForChannelId',
+  },
 ];
 
-tests.forEach(({args, description, expected}) => {
-  return test(description, ({equal, end}) => {
+tests.forEach(({args, description, error, expected}) => {
+  return test(description, ({equal, end, throws}) => {
+    if (!!error) {
+      throws(() => encodeChanId(args), new Error(error), 'Got expected err');
+
+      return end();
+    }
+
     const encoded = encodeChanId(args);
 
     equal(encoded.channel, expected.channel, 'Channel components returned');
@@ -34,4 +55,3 @@ tests.forEach(({args, description, expected}) => {
     return end();
   });
 });
-

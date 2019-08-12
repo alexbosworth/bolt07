@@ -23,10 +23,21 @@ const tests = [
     description: 'Standard bitcoin channel',
     expected: {number: '590587277833404417'},
   },
+  {
+    args: {},
+    description: 'Channel or id is required',
+    error: 'ExpectedChannelIdOrComponentsToConvertToNumber',
+  },
 ];
 
-tests.forEach(({args, description, expected}) => {
-  return test(description, ({end, equals}) => {
+tests.forEach(({args, description, error, expected}) => {
+  return test(description, ({end, equals, throws}) => {
+    if (!!error) {
+      throws(() => chanNumber(args), new Error(error), 'Got expected error');
+
+      return end();
+    }
+
     const {number} = chanNumber(args);
 
     equals(number, expected.number, 'Channel id number returned');
@@ -34,4 +45,3 @@ tests.forEach(({args, description, expected}) => {
     return end();
   });
 });
-

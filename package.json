@@ -8,7 +8,7 @@
   },
   "description": "Utilities for working with bolt07 data formats",
   "devDependencies": {
-    "tap": "14.4.2"
+    "tap": "14.6.1"
   },
   "keywords": [
     "bolt",
@@ -28,5 +28,5 @@
   "scripts": {
     "test": "tap test/*.js"
   },
-  "version": "1.4.2"
+  "version": "1.4.3"
 }

@@ -23,10 +23,21 @@ const tests = [
     description: 'Standard bitcoin channel id',
     expected: {id: '0832300008200001'},
   },
+  {
+    args: {},
+    description: 'Number is required',
+    error: 'ExpectedChannelIdInNumericFormat',
+  },
 ];
 
-tests.forEach(({args, description, expected}) => {
-  return test(description, ({end, equals}) => {
+tests.forEach(({args, description, error, expected}) => {
+  return test(description, ({end, equals, throws}) => {
+    if (!!error) {
+      throws(() => rawChanId(args), new Error(error), 'Got expected error');
+
+      return end();
+    }
+
     const {id} = rawChanId(args);
 
     equals(id, expected.id, 'Raw channel id returned');
@@ -34,4 +45,3 @@ tests.forEach(({args, description, expected}) => {
     return end();
   });
 });
-

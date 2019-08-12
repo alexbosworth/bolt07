@@ -23,10 +23,21 @@ const tests = [
     description: 'Standard bitcoin channel',
     expected: {channel: '537136x2080x1'},
   },
+  {
+    args: {},
+    description: 'An id or number is required',
+    error: 'ExpectedIdOrNumberToFormatAsChannelComponents',
+  },
 ];
 
-tests.forEach(({args, description, expected}) => {
-  return test(description, ({end, equals}) => {
+tests.forEach(({args, description, error, expected}) => {
+  return test(description, ({end, equals, throws}) => {
+    if (!!error) {
+      throws(() => chanFormat(args), new Error(error), 'Got expected error');
+
+      return end();
+    }
+
     const {channel} = chanFormat(args);
 
     equals(channel, expected.channel, 'Channel formatted returned');
@@ -34,4 +45,3 @@ tests.forEach(({args, description, expected}) => {
     return end();
   });
 });
-
