@@ -1,8 +1,10 @@
 # BOLT07
 
-[![npm version](https://badge.fury.io/js/bolt07.svg)](https://badge.fury.io/js/bolt07)
-
 Utilities for working with Lightning Network [BOLT 07](https://github.com/lightningnetwork/lightning-rfc/blob/master/07-routing-gossip.md)
+
+[![npm version](https://badge.fury.io/js/bolt07.svg)](https://badge.fury.io/js/bolt07)
+[![Coverage Status](https://coveralls.io/repos/github/alexbosworth/bolt07/badge.svg?branch=master)](https://coveralls.io/github/alexbosworth/bolt07?branch=master)
+[![Build Status](https://travis-ci.org/alexbosworth/bolt07.svg?branch=master)](https://travis-ci.org/alexbosworth/bolt07)
 
 ## Examples
 
