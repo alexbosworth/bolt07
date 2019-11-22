@@ -1,5 +1,8 @@
 {
-  "author": "Alex Bosworth",
+  "author": {
+    "name": "Alex Bosworth",
+    "url": "https://twitter.com/alexbosworth"
+  },
   "bugs": {
     "url": "https://github.com/alexbosworth/bolt07/issues"
   },
@@ -8,12 +11,12 @@
   },
   "description": "Utilities for working with bolt07 data formats",
   "devDependencies": {
-    "tap": "14.9.2"
+    "tap": "14.10.1"
   },
   "keywords": [
     "bolt",
-    "bolt07",
     "channel-id",
+    "channel-number",
     "lightning",
     "lightning-network",
     "lnd"
@@ -28,5 +31,5 @@
   "scripts": {
     "test": "tap test/*.js"
   },
-  "version": "1.4.3"
+  "version": "1.4.4"
 }
