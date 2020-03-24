@@ -1,6 +1,6 @@
 const {test} = require('tap');
 
-const {chanFormat} = require('./../');
+const {chanFormat} = require('./../../');
 
 const tests = [
   {

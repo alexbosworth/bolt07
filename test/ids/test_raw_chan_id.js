@@ -1,6 +1,6 @@
 const {test} = require('tap');
 
-const {rawChanId} = require('./../');
+const {rawChanId} = require('./../../');
 
 const tests = [
   {

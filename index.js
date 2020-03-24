@@ -1,8 +1,9 @@
-const {chanFormat} = require('./lib');
-const {chanNumber} = require('./lib');
-const {decodeChanId} = require('./lib');
-const {encodeChanId} = require('./lib');
-const {rawChanId} = require('./lib');
+const {chanFormat} = require('./ids');
+const {chanNumber} = require('./ids');
+const {decodeChanId} = require('./ids');
+const {encodeChanId} = require('./ids');
+const {rawChanId} = require('./ids');
+const {routeFromChannels} = require('./routing');
 
 module.exports = {
   chanFormat,
@@ -10,5 +11,5 @@ module.exports = {
   decodeChanId,
   encodeChanId,
   rawChanId,
+  routeFromChannels,
 };
-

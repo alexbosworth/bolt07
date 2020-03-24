@@ -1,6 +1,6 @@
 const {test} = require('tap');
 
-const {decodeChanId} = require('./../');
+const {decodeChanId} = require('./../../');
 
 const tests = [
   {

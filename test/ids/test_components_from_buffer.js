@@ -1,6 +1,6 @@
 const {test} = require('tap');
 
-const componentsFromBuffer = require('./../lib/components_from_buffer');
+const componentsFromBuffer = require('./../../ids/components_from_buffer');
 
 const tests = [
   {

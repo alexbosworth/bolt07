@@ -11,7 +11,7 @@
   },
   "description": "Utilities for working with bolt07 data formats",
   "devDependencies": {
-    "tap": "14.10.6"
+    "tap": "14.10.7"
   },
   "keywords": [
     "bolt",
@@ -29,7 +29,7 @@
     "url": "https://github.com/alexbosworth/bolt07.git"
   },
   "scripts": {
-    "test": "tap test/*.js"
+    "test": "tap test/ids/*.js test/routing/*.js"
   },
   "version": "1.4.5"
 }

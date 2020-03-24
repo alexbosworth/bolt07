@@ -62,7 +62,7 @@ try {
 }
 ```
 
-### Decode Chan Id
+### decodeChanId
 
 Returns components of a channel id or channel number.
 
@@ -101,7 +101,7 @@ try {
 }
 ```
 
-### Encode Chan Id
+### encodeChanId
 
 Returns channel id when components are specified
 
@@ -148,3 +148,153 @@ try {
 }
 ```
 
+## Methods
+
+### chanFormat
+
+Get channel components formatted string
+
+    {
+      [id]: <Raw Channel Id String>
+      [number]: <Number Format Channel Id String>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      channel: <Components Channel Format String>
+    }
+
+### chanNumber
+
+Channel id in numeric format
+
+    {
+      [channel]: <Channel Components String>
+      [id]: <Channel Id Hex String>
+    }
+
+    @throws
+    <ExpectedChannelIdOrComponentsToConvertToNumber Error>
+
+    @returns
+    {
+      number: <Channel Id Number String>
+    }
+
+### decodeChanId
+
+Decode a short channel id into components
+
+    {
+      [channel]: <Channel Components String>
+      [id]: <Channel Id Hex String>
+      [number]: <Channel Id Number Format String>
+    }
+
+    @throws
+    <ExpectedShortChannelIdToDecode Error>
+    <UnexpectedErrorDecodingChannelIdNumber Error>
+    <UnexpectedLengthOfShortChannelId Error>
+
+    @returns
+    {
+      block_height: <Channel Funding Transaction Inclusion Block Height Number>
+      block_index: <Channel Funding Transaction Inclusion Block Position Number>
+      output_index: <Channel Funding Transaction Output Index Number>
+    }
+
+### encodeChanId
+
+Encode a short channel id from components
+
+    {
+      block_height: <Channel Funding Transaction Inclusion Block Height Number>
+      block_index: <Channel Funding Transaction Inclusion Block Position Number>
+      output_index: <Channel Funding Transaction Output Index Number>
+    }
+
+    @throws
+    <ExpectedBlockHeightForChannelId Error>
+    <ExpectedBlockIndexForChannelId Error>
+    <ExpectedTransactionOutputIndexForChannelId Error>
+
+    @returns
+    {
+      channel: <Channel Components Format String>
+      id: <Channel Id Hex String>
+      number: <Channel Number String>
+    }
+
+### rawChanId
+
+Raw channel id
+
+    {
+      [channel]: <Channel Components String>
+      [number]: <Channel Id In Number Format String>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      id: <Raw Channel Id Hex String>
+    }
+
+### routeFromChannels
+
+Get a route from a sequence of channels
+
+Either next hop destination in channels or final destination is required
+
+    {
+      channels: [{
+        capacity: <Maximum Tokens Number>
+        [destination]: <Next Node Public Key Hex String>
+        id: <Standard Format Channel Id String>
+        policies: [{
+          base_fee_mtokens: <Base Fee Millitokens String>
+          cltv_delta: <Locktime Delta Number>
+          fee_rate: <Fees Charged Per Million Tokens Number>
+          is_disabled: <Channel Is Disabled Bool>
+          min_htlc_mtokens: <Minimum HTLC Millitokens Value String>
+          public_key: <Node Public Key String>
+        }]
+      }]
+      [cltv_delta]: <Final CLTV Delta Number>
+      [destination]: <Destination Public Key Hex String>
+      height: <Current Block Height Number>
+      mtokens: <Millitokens To Send String>
+      [payment]: <Payment Identification Value Hex String>
+      [total_mtokens]: <Sum of Shards Millitokens String>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      route: {
+        fee: <Total Fee Tokens To Pay Number>
+        fee_mtokens: <Total Fee Millitokens To Pay String>
+        hops: [{
+          channel: <Standard Format Channel Id String>
+          channel_capacity: <Channel Capacity Tokens Number>
+          fee: <Fee Number>
+          fee_mtokens: <Fee Millitokens String>
+          forward: <Forward Tokens Number>
+          forward_mtokens: <Forward Millitokens String>
+          [public_key]: <Public Key Hex String>
+          timeout: <Timeout Block Height Number>
+        }]
+        mtokens: <Total Fee-Inclusive Millitokens String>
+        [payment]: <Payment Identification Value Hex String>
+        timeout: <Timeout Block Height Number>
+        tokens: <Total Fee-Inclusive Tokens Number>
+        [total_mtokens]: <Sum of Shards Millitokens String>
+      }
+    }
