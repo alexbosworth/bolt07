@@ -7,7 +7,7 @@
     "url": "https://github.com/alexbosworth/bolt07/issues"
   },
   "dependencies": {
-    "bn.js": "5.1.1"
+    "bn.js": "5.1.2"
   },
   "description": "Utilities for working with bolt07 data formats",
   "devDependencies": {
@@ -31,5 +31,5 @@
   "scripts": {
     "test": "tap test/ids/*.js test/routing/*.js"
   },
-  "version": "1.5.0"
+  "version": "1.5.1"
 }
