@@ -11,7 +11,7 @@
   },
   "description": "Utilities for working with bolt07 data formats",
   "devDependencies": {
-    "tap": "14.10.7"
+    "@alexbosworth/tap": "14.10.9"
   },
   "keywords": [
     "bolt",
@@ -31,5 +31,5 @@
   "scripts": {
     "test": "tap test/ids/*.js test/routing/*.js"
   },
-  "version": "1.5.1"
+  "version": "1.5.2"
 }
