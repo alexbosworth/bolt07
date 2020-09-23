@@ -1,6 +1,6 @@
-const {test} = require('@alexbosworth/tap');
+const {test} = require('tap');
 
-const routeFromHops = require('./../../routing/route_from_hops');
+const {routeFromHops} = require('./../../');
 
 const tests = [
   {
@@ -89,6 +89,7 @@ const tests = [
           timeout: 590358,
         },
       ],
+      messages: undefined,
       mtokens: '1003602',
       timeout: 590572,
       tokens: 1003,
@@ -181,6 +182,7 @@ const tests = [
           timeout: 550750,
         },
       ],
+      messages: undefined,
       mtokens: '300035300',
       timeout: 551182,
       tokens: 300035,
@@ -254,6 +256,7 @@ const tests = [
           timeout: 80,
         },
       ],
+      messages: undefined,
       mtokens: '2000015000',
       timeout: 368,
       tokens: 2000015,

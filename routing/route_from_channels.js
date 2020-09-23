@@ -16,8 +16,9 @@ const {isArray} = Array;
       policies: [{
         base_fee_mtokens: <Base Fee Millitokens String>
         cltv_delta: <Locktime Delta Number>
-        fee_rate: <Fees Charged Per Million Tokens Number>
+        fee_rate: <Fees Charged in Millitokens Per Million Number>
         is_disabled: <Channel Is Disabled Bool>
+        max_htlc_mtokens: <Maximum HTLC Millitokens Value String>
         min_htlc_mtokens: <Minimum HTLC Millitokens Value String>
         public_key: <Node Public Key String>
       }]
@@ -25,6 +26,10 @@ const {isArray} = Array;
     [cltv_delta]: <Final CLTV Delta Number>
     [destination]: <Destination Public Key Hex String>
     height: <Current Block Height Number>
+    [messages]: [{
+      type: <Message Type Number String>
+      value: <Message Raw Value Hex Encoded String>
+    }]
     mtokens: <Millitokens To Send String>
     [payment]: <Payment Identification Value Hex String>
     [total_mtokens]: <Sum of Shards Millitokens String>
@@ -47,6 +52,10 @@ const {isArray} = Array;
         forward_mtokens: <Forward Millitokens String>
         [public_key]: <Public Key Hex String>
         timeout: <Timeout Block Height Number>
+      }]
+      [messages]: [{
+        type: <Message Type Number String>
+        value: <Message Raw Value Hex Encoded String>
       }]
       mtokens: <Total Fee-Inclusive Millitokens String>
       [payment]: <Payment Identification Value Hex String>
@@ -83,6 +92,7 @@ module.exports = args => {
     height: args.height,
     hops: path.hops,
     initial_cltv: path.initial_cltv || defaultInitialCltvDelta,
+    messages: args.messages,
     mtokens: args.mtokens,
     payment: args.payment,
     total_mtokens: args.total_mtokens,

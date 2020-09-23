@@ -4,6 +4,7 @@ const {decodeChanId} = require('./ids');
 const {encodeChanId} = require('./ids');
 const {rawChanId} = require('./ids');
 const {routeFromChannels} = require('./routing');
+const {routeFromHops} = require('./routing');
 
 module.exports = {
   chanFormat,
@@ -12,4 +13,5 @@ module.exports = {
   encodeChanId,
   rawChanId,
   routeFromChannels,
+  routeFromHops,
 };

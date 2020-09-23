@@ -1,6 +1,6 @@
+const asTokens = require('./as_tokens');
 const policyFee = require('./policy_fee');
 
-const asTokens = mtokens => Number(mtokens / BigInt(1e3));
 const defaultCltvBuffer = 40;
 const {isArray} = Array;
 const minCltv = 0;
@@ -20,6 +20,10 @@ const minFee = 0;
       public_key: <Next Hop Public Key Hex String>
     }]
     initial_cltv: <Initial CLTV Delta Number>
+    [messages]: [{
+      type: <Message Type Number String>
+      value: <Message Raw Value Hex Encoded String>
+    }]
     mtokens: <Millitokens To Send String>
     [payment]: <Payment Identification Value Hex String>
     [total_mtokens]: <Total Millitokens For Sharded Payments String>
@@ -41,6 +45,10 @@ const minFee = 0;
       forward_mtokens: <Forward Millitokens String>
       [public_key]: <Public Key Hex String>
       timeout: <Timeout Block Height Number>
+    }]
+    [messages]: [{
+      type: <Message Type Number String>
+      value: <Message Raw Value Hex Encoded String>
     }]
     mtokens: <Total Fee-Inclusive Millitokens String>
     [payment]: <Payment Identification Value Hex String>
@@ -112,9 +120,9 @@ module.exports = args => {
     const routeHop = {
       channel: hop.channel,
       channel_capacity: hop.channel_capacity,
-      fee: asTokens(feeMtokens),
+      fee: asTokens({mtokens: feeMtokens}).tokens,
       fee_mtokens: feeMtokens.toString(),
-      forward: asTokens(forwardMtokens),
+      forward: asTokens({mtokens: forwardMtokens}).tokens,
       forward_mtokens: forwardMtokens.toString(),
       public_key: hop.public_key,
       timeout: timeoutHeight,
@@ -137,13 +145,14 @@ module.exports = args => {
   }
 
   return {
-    fee: asTokens(totalFeeMtokens),
+    fee: asTokens({mtokens: totalFeeMtokens}).tokens,
     fee_mtokens: totalFeeMtokens.toString(),
     hops: backwardsPath.slice().reverse(),
+    messages: args.messages,
     mtokens: totalMtokens.toString(),
     payment: args.payment,
     timeout: timeoutHeight + args.initial_cltv,
-    tokens: asTokens(totalMtokens),
+    tokens: asTokens({mtokens: totalMtokens}).tokens,
     total_mtokens: args.total_mtokens,
   };
 };

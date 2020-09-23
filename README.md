@@ -259,8 +259,9 @@ Either next hop destination in channels or final destination is required
         policies: [{
           base_fee_mtokens: <Base Fee Millitokens String>
           cltv_delta: <Locktime Delta Number>
-          fee_rate: <Fees Charged Per Million Tokens Number>
+          fee_rate: <Fees Charged in Millitokens Per Million Number>
           is_disabled: <Channel Is Disabled Bool>
+          max_htlc_mtokens: <Maximum HTLC Millitokens Value String>
           min_htlc_mtokens: <Minimum HTLC Millitokens Value String>
           public_key: <Node Public Key String>
         }]
@@ -268,6 +269,10 @@ Either next hop destination in channels or final destination is required
       [cltv_delta]: <Final CLTV Delta Number>
       [destination]: <Destination Public Key Hex String>
       height: <Current Block Height Number>
+      [messages]: [{
+        type: <Message Type Number String>
+        value: <Message Raw Value Hex Encoded String>
+      }]
       mtokens: <Millitokens To Send String>
       [payment]: <Payment Identification Value Hex String>
       [total_mtokens]: <Sum of Shards Millitokens String>
@@ -291,10 +296,67 @@ Either next hop destination in channels or final destination is required
           [public_key]: <Public Key Hex String>
           timeout: <Timeout Block Height Number>
         }]
+        [messages]: [{
+          type: <Message Type Number String>
+          value: <Message Raw Value Hex Encoded String>
+        }]
         mtokens: <Total Fee-Inclusive Millitokens String>
         [payment]: <Payment Identification Value Hex String>
         timeout: <Timeout Block Height Number>
         tokens: <Total Fee-Inclusive Tokens Number>
         [total_mtokens]: <Sum of Shards Millitokens String>
       }
+    }
+
+### routeFromHops
+
+Given hops to a destination, construct a payable route
+
+    {
+      [cltv_delta]: <Final Cltv Delta Number>
+      height: <Current Block Height Number>
+      hops: [{
+        base_fee_mtokens: <Base Fee Millitokens String>
+        channel: <Standard Format Channel Id String>
+        [channel_capacity]: <Channel Capacity Tokens Number>
+        cltv_delta: <CLTV Delta Number>
+        fee_rate: <Fee Rate In Millitokens Per Million Number>
+        public_key: <Next Hop Public Key Hex String>
+      }]
+      initial_cltv: <Initial CLTV Delta Number>
+      [messages]: [{
+        type: <Message Type Number String>
+        value: <Message Raw Value Hex Encoded String>
+      }]
+      mtokens: <Millitokens To Send String>
+      [payment]: <Payment Identification Value Hex String>
+      [total_mtokens]: <Total Millitokens For Sharded Payments String>
+    }
+
+    @throws
+    <Error>
+
+    @returns
+    {
+      fee: <Route Fee Tokens Number>
+      fee_mtokens: <Route Fee Millitokens String>
+      hops: [{
+        channel: <Standard Format Channel Id String>
+        channel_capacity: <Channel Capacity Tokens Number>
+        fee: <Fee Number>
+        fee_mtokens: <Fee Millitokens String>
+        forward: <Forward Tokens Number>
+        forward_mtokens: <Forward Millitokens String>
+        [public_key]: <Public Key Hex String>
+        timeout: <Timeout Block Height Number>
+      }]
+      [messages]: [{
+        type: <Message Type Number String>
+        value: <Message Raw Value Hex Encoded String>
+      }]
+      mtokens: <Total Fee-Inclusive Millitokens String>
+      [payment]: <Payment Identification Value Hex String>
+      timeout: <Timeout Block Height Number>
+      tokens: <Total Fee-Inclusive Tokens Number>
+      [total_mtokens]: <Sharded Payments Total Millitokens String>
     }
