@@ -2,7 +2,7 @@ const {test} = require('tap');
 
 const betaChannels = require('./../fixtures/graph_beta').channels;
 const charlieChannels = require('./../fixtures/graph_charlie').channels;
-const hopsFromChannels = require('./../../routing/hops_from_channels');
+const {hopsFromChannels} = require('./../../');
 
 const tests = [
   {

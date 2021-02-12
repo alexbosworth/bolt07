@@ -6,6 +6,17 @@ Utilities for working with Lightning Network [BOLT 07](https://github.com/lightn
 [![Coverage Status](https://coveralls.io/repos/github/alexbosworth/bolt07/badge.svg?branch=master)](https://coveralls.io/github/alexbosworth/bolt07?branch=master)
 [![Build Status](https://travis-ci.org/alexbosworth/bolt07.svg?branch=master)](https://travis-ci.org/alexbosworth/bolt07)
 
+## Methods
+
+- [chanFormat](#chanformat) - convert number or raw bytes format channel id to standard format
+- [chanNumber](#channumber) - convert standard, raw bytes format channel id to number format
+- [decodeChanId](#decodechanid) - decode block height and index components of a channel id
+- [encodeChanId](#encodechanid) - encode block height and index components into a channel id
+- [hopsFromChannels](#hopsfromchannels) - derive policy hops from a list of channels
+- [rawChanId](#rawchanid) - convert numeric or standard channel id into a raw wire form
+- [routeFromChannels](#routefromchannels) - derive a route from a sequence of channels
+- [routeFromHops](#routefromhops) - derive a route from a sequence of policy hops
+
 ## Examples
 
 Sample code for working with bolt07 utility functions:

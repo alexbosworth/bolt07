@@ -1,5 +1,9 @@
 # Versions
 
+## 1.7.0
+
+- `hopsFromChannels`: Derive policy hops from a list of channels
+
 ## 1.6.0
 
 - `routeFromChannels`: Add support for `messages` in routes
