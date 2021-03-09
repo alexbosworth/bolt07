@@ -1,6 +1,6 @@
 # Versions
 
-## 1.7.0
+## 1.7.1
 
 - `hopsFromChannels`: Derive policy hops from a list of channels
 
