@@ -16,7 +16,7 @@ const tests = [
 ];
 
 tests.forEach(({args, description, error, expected}) => {
-  return test(description, ({end, equals, throws}) => {
+  return test(description, ({end, equal, throws}) => {
     if (!!error) {
       throws(() => componentsFromBuffer(args), new Error(error), 'Got error');
 

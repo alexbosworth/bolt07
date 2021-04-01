@@ -31,7 +31,7 @@ const tests = [
 ];
 
 tests.forEach(({args, description, error, expected}) => {
-  return test(description, ({end, equals, throws}) => {
+  return test(description, ({end, equal, throws}) => {
     if (!!error) {
       throws(() => chanNumber(args), new Error(error), 'Got expected error');
 
@@ -40,7 +40,7 @@ tests.forEach(({args, description, error, expected}) => {
 
     const {number} = chanNumber(args);
 
-    equals(number, expected.number, 'Channel id number returned');
+    equal(number, expected.number, 'Channel id number returned');
 
     return end();
   });

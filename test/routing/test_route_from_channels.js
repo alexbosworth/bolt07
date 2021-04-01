@@ -938,7 +938,7 @@ const tests = [
 ];
 
 tests.forEach(({args, description, error, expected}) => {
-  return test(description, ({deepIs, end, throws}) => {
+  return test(description, ({end, strictSame, throws}) => {
     if (!!error) {
       throws(() => routeFromChannels(args), new Error(error), 'Got error');
     } else {
@@ -947,7 +947,7 @@ tests.forEach(({args, description, error, expected}) => {
       delete route.payment;
       delete route.total_mtokens;
 
-      deepIs(route, expected.route, 'Route is constructed as expected');
+      strictSame(route, expected.route, 'Route is constructed as expected');
     }
 
     return end();

@@ -31,7 +31,7 @@ const tests = [
 ];
 
 tests.forEach(({args, description, error, expected}) => {
-  return test(description, ({end, equals, throws}) => {
+  return test(description, ({end, equal, throws}) => {
     if (!!error) {
       throws(() => chanFormat(args), new Error(error), 'Got expected error');
 
@@ -40,7 +40,7 @@ tests.forEach(({args, description, error, expected}) => {
 
     const {channel} = chanFormat(args);
 
-    equals(channel, expected.channel, 'Channel formatted returned');
+    equal(channel, expected.channel, 'Channel formatted returned');
 
     return end();
   });
