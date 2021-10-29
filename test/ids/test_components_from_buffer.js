@@ -1,4 +1,4 @@
-const {test} = require('tap');
+const {test} = require('@alexbosworth/tap');
 
 const componentsFromBuffer = require('./../../ids/components_from_buffer');
 
