@@ -29,7 +29,7 @@
     "url": "https://github.com/alexbosworth/bolt07.git"
   },
   "scripts": {
-    "test": "tap test/ids/*.js test/routing/*.js"
+    "test": "tap --branches=1 --functions=1 --lines=1 --statements=1 test/addresses/*.js test/ids/*.js test/routing/*.js"
   },
-  "version": "1.7.4"
+  "version": "1.8.0"
 }

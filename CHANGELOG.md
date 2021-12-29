@@ -1,5 +1,10 @@
 # Versions
 
+## 1.8.0
+
+- `decodeSocket`: Decode a connection socket from hex data
+- `encodeSocket`: Encode a connection socket to hex data
+
 ## 1.7.4
 
 - `hopsFromChannels`: Derive policy hops from a list of channels
