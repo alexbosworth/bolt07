@@ -1,6 +1,6 @@
 # Versions
 
-## 1.8.1
+## 1.8.2
 
 - `decodeSocket`: Decode a connection socket from hex data
 - `encodeSocket`: Encode a connection socket to hex data
