@@ -22,6 +22,15 @@ const tests = [
     },
   },
   {
+    args: {block_height: 16000000, block_index: 0, output_index: 10},
+    description: 'SCID alias channel id',
+    expected: {
+      channel: '16000000x0x10',
+      id: 'f42400000000000a',
+      number: '17592186044416000010',
+    },
+  },
+  {
     args: {},
     description: 'Expected block height',
     error: 'ExpectedBlockHeightForChannelId',

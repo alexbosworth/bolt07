@@ -24,6 +24,11 @@ const tests = [
     expected: {channel: '537136x2080x1'},
   },
   {
+    args: {number: '17592186044416000010'},
+    description: 'SCID alias type id',
+    expected: {channel: '16000000x0x10'},
+  },
+  {
     args: {},
     description: 'An id or number is required',
     error: 'ExpectedIdOrNumberToFormatAsChannelComponents',

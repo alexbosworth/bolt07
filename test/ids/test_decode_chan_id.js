@@ -34,6 +34,11 @@ const tests = [
     expected: {block_height: 537136, block_index: 2080, output_index: 1},
   },
   {
+    args: {number: '17592186044416000010'},
+    description: 'SCID alias channel id',
+    expected: {block_height: 16000000, block_index: 0, output_index: 10},
+  },
+  {
     args: {},
     description: 'Id or channel or number is required',
     error: 'ExpectedShortChannelIdToDecode',
