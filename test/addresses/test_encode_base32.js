@@ -1,4 +1,6 @@
-const {test} = require('@alexbosworth/tap');
+const strictSame = require('node:assert').strict.deepStrictEqual;
+const test = require('node:test');
+const {throws} = require('node:assert').strict;
 
 const encodeBase32 = require('./../../addresses/encode_base32');
 
@@ -25,7 +27,7 @@ const tests = [
 ];
 
 tests.forEach(({args, description, error, expected}) => {
-  return test(description, ({end, strictSame, throws}) => {
+  return test(description, (t, end) => {
     if (!!error) {
       throws(() => encodeBase32(args), new Error(error), 'Got expected error');
     } else {

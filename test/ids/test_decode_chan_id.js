@@ -1,4 +1,6 @@
-const {test} = require('@alexbosworth/tap');
+const strictSame = require('node:assert').strict.deepStrictEqual;
+const test = require('node:test');
+const {throws} = require('node:assert').strict;
 
 const {decodeChanId} = require('./../../');
 
@@ -51,7 +53,7 @@ const tests = [
 ];
 
 tests.forEach(({args, description, error, expected}) => {
-  return test(description, ({equal, end, throws}) => {
+  return test(description, (t, end) => {
     if (!!error) {
       throws(() => decodeChanId(args), new Error(error), 'Got expected err');
 
@@ -60,9 +62,9 @@ tests.forEach(({args, description, error, expected}) => {
 
     const decoded = decodeChanId(args);
 
-    equal(decoded.block_height, expected.block_height, 'Block height derived');
-    equal(decoded.block_index, expected.block_index, 'Block index derived');
-    equal(decoded.output_index, expected.output_index, 'Output index derived');
+    strictSame(decoded.block_height, expected.block_height, 'Block height');
+    strictSame(decoded.block_index, expected.block_index, 'Block index');
+    strictSame(decoded.output_index, expected.output_index, 'Output index');
 
     return end();
   });

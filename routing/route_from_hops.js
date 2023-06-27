@@ -58,15 +58,13 @@ const minFee = 0;
   }
 */
 module.exports = args => {
-  const {height, hops, mtokens} = args;
-
   const finalCltvDelta = args.cltv_delta || defaultCltvBuffer;
 
-  if (height === undefined) {
+  if (args.height === undefined) {
     throw new Error('ExpectedChainHeightForRoute');
   }
 
-  if (!isArray(hops) || !hops.length) {
+  if (!isArray(args.hops) || !args.hops.length) {
     throw new Error('ExpectedHopsToConstructRouteFrom');
   }
 
@@ -74,12 +72,12 @@ module.exports = args => {
     throw new Error('ExpectedInitialCltvDeltaToConstructRouteFromHops');
   }
 
-  if (!mtokens) {
+  if (!args.mtokens) {
     throw new Error('ExpectedMillitokensToSendAcrossHops');
   }
 
   // Check hops for validity
-  hops.forEach((hop, i) => {
+  args.hops.forEach((hop, i) => {
     if (hop.base_fee_mtokens === undefined) {
       throw new Error('ExpectedHopBaseFeeMillitokensForRouteConstruction');
     }
@@ -103,12 +101,12 @@ module.exports = args => {
     return;
   });
 
-  let forwardMtokens = BigInt(mtokens);
-  const [firstHop] = hops.slice();
-  let timeoutHeight = height + finalCltvDelta;
+  let forwardMtokens = BigInt(args.mtokens);
+  const [firstHop] = args.hops.slice();
+  let timeoutHeight = args.height + finalCltvDelta;
 
   // To construct the route, we need to go backwards from the end
-  const backwardsPath = hops.slice().reverse().map((hop, i, hops) => {
+  const backwardsPath = args.hops.slice().reverse().map((hop, i, hops) => {
     let feeMtokens = BigInt(minFee);
 
     if (!!i) {
@@ -138,9 +136,9 @@ module.exports = args => {
     .map(n => BigInt(n.fee_mtokens))
     .reduce((sum, n) => sum + n, BigInt(minFee));
 
-  const totalMtokens = totalFeeMtokens + BigInt(mtokens);
+  const totalMtokens = totalFeeMtokens + BigInt(args.mtokens);
 
-  if (hops.length === 1) {
+  if (args.hops.length === 1) {
     timeoutHeight -= args.initial_cltv;
   }
 

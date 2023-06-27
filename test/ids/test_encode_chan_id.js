@@ -1,4 +1,6 @@
-const {test} = require('@alexbosworth/tap');
+const strictSame = require('node:assert').strict.deepStrictEqual;
+const test = require('node:test');
+const {throws} = require('node:assert').strict;
 
 const {encodeChanId} = require('./../../');
 
@@ -48,7 +50,7 @@ const tests = [
 ];
 
 tests.forEach(({args, description, error, expected}) => {
-  return test(description, ({equal, end, throws}) => {
+  return test(description, (t, end) => {
     if (!!error) {
       throws(() => encodeChanId(args), new Error(error), 'Got expected err');
 
@@ -57,9 +59,9 @@ tests.forEach(({args, description, error, expected}) => {
 
     const encoded = encodeChanId(args);
 
-    equal(encoded.channel, expected.channel, 'Channel components returned');
-    equal(encoded.id, expected.id, 'Channel id returned');
-    equal(encoded.number, expected.number, 'Channel number returned');
+    strictSame(encoded.channel, expected.channel, 'Channel components');
+    strictSame(encoded.id, expected.id, 'Channel id returned');
+    strictSame(encoded.number, expected.number, 'Channel number returned');
 
     return end();
   });

@@ -1,4 +1,6 @@
-const {test} = require('@alexbosworth/tap');
+const strictSame = require('node:assert').strict.deepStrictEqual;
+const test = require('node:test');
+const {throws} = require('node:assert').strict;
 
 const {chanNumber} = require('./../../');
 
@@ -36,7 +38,7 @@ const tests = [
 ];
 
 tests.forEach(({args, description, error, expected}) => {
-  return test(description, ({end, equal, throws}) => {
+  return test(description, (t, end) => {
     if (!!error) {
       throws(() => chanNumber(args), new Error(error), 'Got expected error');
 
@@ -45,7 +47,7 @@ tests.forEach(({args, description, error, expected}) => {
 
     const {number} = chanNumber(args);
 
-    equal(number, expected.number, 'Channel id number returned');
+    strictSame(number, expected.number, 'Channel id number returned');
 
     return end();
   });

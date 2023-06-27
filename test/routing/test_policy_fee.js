@@ -1,4 +1,6 @@
-const {test} = require('@alexbosworth/tap');
+const strictSame = require('node:assert').strict.deepStrictEqual;
+const test = require('node:test');
+const {throws} = require('node:assert').strict;
 
 const policyFee = require('./../../routing/policy_fee');
 
@@ -31,11 +33,11 @@ const tests = [
 ];
 
 tests.forEach(({args, description, error, expected}) => {
-  return test(description, ({end, equal, throws}) => {
+  return test(description, (t, end) => {
     if (!!error) {
       throws(() => policyFee(args), new Error(error), 'Got expected error');
     } else {
-      equal(policyFee(args).fee_mtokens, expected.fee_mtokens, 'Got fee');
+      strictSame(policyFee(args).fee_mtokens, expected.fee_mtokens, 'Fee');
     }
 
     return end();

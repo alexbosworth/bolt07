@@ -1,4 +1,6 @@
-const {test} = require('@alexbosworth/tap');
+const strictSame = require('node:assert').strict.deepStrictEqual;
+const test = require('node:test');
+const {throws} = require('node:assert').strict;
 
 const {decodeSocket} = require('./../../');
 
@@ -53,7 +55,7 @@ const tests = [
 ];
 
 tests.forEach(({args, description, error, expected}) => {
-  return test(description, ({end, strictSame, throws}) => {
+  return test(description, (t, end) => {
     if (!!error) {
       throws(() => decodeSocket(args), new Error(error), 'Got expected error');
     } else {
