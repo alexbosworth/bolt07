@@ -27,4 +27,3 @@ module.exports = ({channel, id}) => {
 
   return {number: new BN(Buffer.from(rawId, 'hex')).toString(decBase)};
 };
-

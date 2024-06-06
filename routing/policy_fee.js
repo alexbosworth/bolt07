@@ -1,3 +1,4 @@
+const none = '0';
 const rateDivisor = BigInt(1e6);
 
 /** Fee for policy
@@ -7,6 +8,8 @@ const rateDivisor = BigInt(1e6);
     policy: {
       base_fee_mtokens: <Base Fee Millitokens String>
       fee_rate: <Fee Rate Number>
+      [inbound_base_discount_mtokens]: <Source Base Fee Reduction String>
+      [inbound_rate_discount]: <Source Per Million Rate Reduction Number>
     }
   }
 
@@ -38,8 +41,16 @@ module.exports = ({mtokens, policy}) => {
   const baseFeeMtokens = BigInt(policy.base_fee_mtokens);
   const feeRate = BigInt(policy.fee_rate);
   const forwardMtokens = BigInt(mtokens);
+  const lowerBaseFee = BigInt(policy.inbound_base_discount_mtokens || none);
+  const lowerFeeRate = BigInt(policy.inbound_rate_discount || none);
 
+  const discount = lowerBaseFee + forwardMtokens * lowerFeeRate / rateDivisor;
   const fee = baseFeeMtokens + forwardMtokens * feeRate / rateDivisor;
 
-  return {fee_mtokens: fee.toString()};
+  // Exit early when the discount drowns out the fee
+  if (-discount > fee) {
+    return {fee_mtokens: none};
+  }
+
+  return {fee_mtokens: (fee + discount).toString()};
 };

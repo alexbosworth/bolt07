@@ -15,6 +15,8 @@ const payNodesCount = 2;
         base_fee_mtokens: <Base Fee Millitokens String>
         cltv_delta: <Locktime Delta Number>
         fee_rate: <Fees Charged Per Million Tokens Number>
+        [inbound_base_discount_mtokens]: <Source Base Fee Reduction String>
+        [inbound_rate_discount]: <Source Per Million Rate Reduction Number>
         is_disabled: <Channel Is Disabled Bool>
         min_htlc_mtokens: <Minimum HTLC Millitokens Value String>
         public_key: <Node Public Key String>
@@ -34,6 +36,8 @@ const payNodesCount = 2;
       channel_capacity: <Maximum Tokens Number>
       cltv_delta: <CLTV Delta Number>
       fee_rate: <Fee Rate In Millitokens Per Million Number>
+      [inbound_base_discount_mtokens]: <Source Base Fee Reduction String>
+      [inbound_rate_discount]: <Source Per Million Rate Reduction Number>
       public_key: <Public Key Hex String>
     }]
   }
@@ -74,7 +78,7 @@ module.exports = ({channels, destination}) => {
     const nextPolicy = chans[i + [channel].length];
     let overridePolicy;
 
-    const peer = channel.policies.find(n => n.public_key === nextHop);
+    const peer = channel.policies.find(n => n.public_key === nextHop) || {};
     const policy = channel.policies.find(n => n.public_key !== nextHop);
 
     if (!policy) {
@@ -104,6 +108,8 @@ module.exports = ({channels, destination}) => {
       channel_capacity: channel.capacity,
       cltv_delta: cltvDelta || defaultCltvDelta,
       fee_rate: (overridePolicy || policy).fee_rate,
+      inbound_base_discount_mtokens: peer.inbound_base_discount_mtokens,
+      inbound_rate_discount: peer.inbound_rate_discount,
       public_key: nextHop,
     };
   });

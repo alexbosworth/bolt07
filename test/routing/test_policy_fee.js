@@ -27,8 +27,34 @@ const tests = [
   },
   {
     args: {mtokens: '1000000', policy: {base_fee_mtokens: '1', fee_rate: 1}},
-    description: 'Fee rate is required',
+    description: 'Fee is calculated',
     expected: {fee_mtokens: '2'},
+  },
+  {
+    args: {
+      mtokens: '1000000',
+      policy: {
+        base_fee_mtokens: '1',
+        fee_rate: 1,
+        inbound_base_discount_mtokens: '-1',
+        inbound_rate_discount: -1,
+      },
+    },
+    description: 'Fee rate with discount is calculated',
+    expected: {fee_mtokens: '0'},
+  },
+  {
+    args: {
+      mtokens: '1000000',
+      policy: {
+        base_fee_mtokens: '1',
+        fee_rate: 1,
+        inbound_base_discount_mtokens: '-10',
+        inbound_rate_discount: -1,
+      },
+    },
+    description: 'Fee rate with big discount is calculated',
+    expected: {fee_mtokens: '0'},
   },
 ];
 

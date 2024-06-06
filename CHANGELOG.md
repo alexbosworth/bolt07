@@ -1,5 +1,10 @@
 # Versions
 
+## 1.9.0
+
+- `hopsFromChannels`, `routeFromChannels`, `routeFromHops`: Add support for
+    inbound discounts
+
 ## 1.8.4
 
 - `decodeSocket`: Decode a connection socket from hex data

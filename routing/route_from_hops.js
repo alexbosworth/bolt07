@@ -17,6 +17,8 @@ const minFee = 0;
       [channel_capacity]: <Channel Capacity Tokens Number>
       cltv_delta: <CLTV Delta Number>
       fee_rate: <Fee Rate In Millitokens Per Million Number>
+      [inbound_base_discount_mtokens]: <Source Base Fee Reduction String>
+      [inbound_rate_discount]: <Source Per Million Rate Reduction Number>
       public_key: <Next Hop Public Key Hex String>
     }]
     initial_cltv: <Initial CLTV Delta Number>
