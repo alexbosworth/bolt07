@@ -48,9 +48,9 @@ module.exports = ({mtokens, policy}) => {
   const fee = baseFeeMtokens + forwardMtokens * feeRate / rateDivisor;
 
   // Exit early when the discount drowns out the fee
-  if (-discount > fee) {
+  if (discount > fee) {
     return {fee_mtokens: none};
   }
 
-  return {fee_mtokens: (fee + discount).toString()};
+  return {fee_mtokens: (fee - discount).toString()};
 };
