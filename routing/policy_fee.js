@@ -44,8 +44,11 @@ module.exports = ({mtokens, policy}) => {
   const lowerBaseFee = BigInt(policy.inbound_base_discount_mtokens || none);
   const lowerFeeRate = BigInt(policy.inbound_rate_discount || none);
 
-  const discount = lowerBaseFee + forwardMtokens * lowerFeeRate / rateDivisor;
   const fee = baseFeeMtokens + forwardMtokens * feeRate / rateDivisor;
+
+  const total = fee + forwardMtokens;
+
+  const discount = lowerBaseFee + total * lowerFeeRate / rateDivisor;
 
   // Exit early when the discount drowns out the fee
   if (discount > fee) {
