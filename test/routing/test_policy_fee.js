@@ -6,52 +6,48 @@ const policyFee = require('./../../routing/policy_fee');
 
 const tests = [
   {
-    args: {},
+    args: {inbound: {}},
     description: 'Mtokens are required',
     error: 'ExpectedMillitokensForPolicyFeeCalculation',
   },
   {
-    args: {mtokens: '1000000'},
+    args: {inbound: {}, mtokens: '1000000'},
     description: 'A policy is required',
     error: 'ExpectedPolicyToCalculateFeeFor',
   },
   {
-    args: {mtokens: '1000000', policy: {}},
+    args: {inbound: {}, mtokens: '1000000', policy: {}},
     description: 'Base fee tokens are required',
     error: 'ExpectedBaseFeeMillitokensForPolicyFeeCalculation',
   },
   {
-    args: {mtokens: '1000000', policy: {base_fee_mtokens: '1'}},
+    args: {inbound: {}, mtokens: '1000000', policy: {base_fee_mtokens: '1'}},
     description: 'Fee rate is required',
     error: 'ExpectedFeeRateForPolicyFeeCalculation',
   },
   {
-    args: {mtokens: '1000000', policy: {base_fee_mtokens: '1', fee_rate: 1}},
+    args: {
+      inbound: {},
+      mtokens: '1000000',
+      policy: {base_fee_mtokens: '1', fee_rate: 1},
+    },
     description: 'Fee is calculated',
     expected: {fee_mtokens: '2'},
   },
   {
     args: {
+      inbound: {inbound_base_discount_mtokens: '1', inbound_rate_discount: 1},
       mtokens: '1000000',
-      policy: {
-        base_fee_mtokens: '1',
-        fee_rate: 1,
-        inbound_base_discount_mtokens: '1',
-        inbound_rate_discount: 1,
-      },
+      policy: {base_fee_mtokens: '1', fee_rate: 1},
     },
     description: 'Fee rate with discount is calculated',
     expected: {fee_mtokens: '0'},
   },
   {
     args: {
+      inbound: {inbound_base_discount_mtokens: '10', inbound_rate_discount: 1},
       mtokens: '1000000',
-      policy: {
-        base_fee_mtokens: '1',
-        fee_rate: 1,
-        inbound_base_discount_mtokens: '10',
-        inbound_rate_discount: 1,
-      },
+      policy: {base_fee_mtokens: '1', fee_rate: 1},
     },
     description: 'Fee rate with big discount is calculated',
     expected: {fee_mtokens: '0'},

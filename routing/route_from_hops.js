@@ -112,7 +112,11 @@ module.exports = args => {
     let feeMtokens = BigInt(minFee);
 
     if (!!i) {
-      const forward = policyFee({policy: hops[i-1], mtokens: forwardMtokens});
+      const forward = policyFee({
+        inbound: hops[i],
+        policy: hops[i-1],
+        mtokens: forwardMtokens,
+      });
 
       feeMtokens = BigInt(forward.fee_mtokens);
     }

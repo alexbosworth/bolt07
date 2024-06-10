@@ -1,6 +1,6 @@
 # Versions
 
-## 1.9.2
+## 1.9.3
 
 - `hopsFromChannels`, `routeFromChannels`, `routeFromHops`: Add support for
     inbound discounts
