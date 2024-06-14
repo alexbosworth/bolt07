@@ -92,6 +92,9 @@ module.exports = ({channels, destination}) => {
     let cltvDelta = (overridePolicy || policy).cltv_delta || defaultCltvDelta;
     const payIndex = chans.length - payNodesCount;
 
+    const nextCltvPolicy = ((nextPolicy || {}).policies || [])
+      .find(n => n.public_key === peer.public_key);
+
     // The end of a route is where the penultimate node pays the ultimate one.
     if (i < payIndex) {
       cltvDelta = peer.cltv_delta;
@@ -100,6 +103,10 @@ module.exports = ({channels, destination}) => {
       const payingKey = hopDestinations[i];
 
       cltvDelta = endPolicies.find(n => n.public_key === payingKey).cltv_delta;
+    }
+
+    if (!!nextCltvPolicy) {
+      cltvDelta = nextCltvPolicy.cltv_delta;
     }
 
     return {
