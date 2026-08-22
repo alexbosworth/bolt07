@@ -31,9 +31,39 @@ const tests = [
     expected: {number: '17592186044416000010'},
   },
   {
+    args: {id: 'ffffffffffffffff'},
+    description: 'Maximum value channel id',
+    expected: {number: '18446744073709551615'},
+  },
+  {
+    args: {id: '0000000000000000'},
+    description: 'Minimum value channel id',
+    expected: {number: '0'},
+  },
+  {
     args: {},
     description: 'Channel or id is required',
     error: 'ExpectedChannelIdOrComponentsToConvertToNumber',
+  },
+  {
+    args: {id: '00'},
+    description: 'Id must not be too short',
+    error: 'UnexpectedLengthOfShortChannelId',
+  },
+  {
+    args: {id: '15fbe7000026000000'},
+    description: 'Id must not be too long',
+    error: 'UnexpectedLengthOfShortChannelId',
+  },
+  {
+    args: {id: '000000000'},
+    description: 'Id must not have an odd number of hex characters',
+    error: 'UnexpectedLengthOfShortChannelId',
+  },
+  {
+    args: {id: 'zzzzzzzzzzzzzzzz'},
+    description: 'Id must be hex encoded',
+    error: 'UnexpectedLengthOfShortChannelId',
   },
 ];
 

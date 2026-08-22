@@ -33,9 +33,32 @@ const tests = [
     },
   },
   {
+    args: {block_height: 16777215, block_index: 16777215, output_index: 65535},
+    description: 'Maximum encodable channel id',
+    expected: {
+      channel: '16777215x16777215x65535',
+      id: 'ffffffffffffffff',
+      number: '18446744073709551615',
+    },
+  },
+  {
+    args: {block_height: 0, block_index: 0, output_index: 0},
+    description: 'Minimum encodable channel id',
+    expected: {
+      channel: '0x0x0',
+      id: '0000000000000000',
+      number: '0',
+    },
+  },
+  {
     args: {},
     description: 'Expected block height',
     error: 'ExpectedBlockHeightForChannelId',
+  },
+  {
+    args: {block_height: 16777216, block_index: 0, output_index: 0},
+    description: 'Expected block height that fits within three bytes',
+    error: 'ExpectedBlockHeightWithinRangeForChannelId',
   },
   {
     args: {block_height: 1440743},
@@ -43,9 +66,19 @@ const tests = [
     error: 'ExpectedBlockIndexForChannelId',
   },
   {
+    args: {block_height: 1440743, block_index: 16777216, output_index: 0},
+    description: 'Expected block index that fits within three bytes',
+    error: 'ExpectedBlockIndexWithinRangeForChannelId',
+  },
+  {
     args: {block_height: 1440743, block_index: 2080},
     description: 'Expected output index',
     error: 'ExpectedTransactionOutputIndexForChannelId',
+  },
+  {
+    args: {block_height: 1440743, block_index: 2080, output_index: 65536},
+    description: 'Expected output index that fits within two bytes',
+    error: 'ExpectedOutputIndexWithinRangeForChannelId',
   },
 ];
 

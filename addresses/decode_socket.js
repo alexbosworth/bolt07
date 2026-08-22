@@ -1,5 +1,7 @@
 const encodeBase32 = require('./encode_base32');
 
+const dnsHexLength = data => (parseInt(data.slice(0, 2), 16) + 3) * 2;
+const hexAsHostname = data => Buffer.from(data.slice(2, -4), 'hex').toString();
 const hexAsIpV4 = hex => [...Buffer.from(hex.slice(0, 8), 'hex')].join('.');
 const hexAsIpV6 = data => data.slice(0, 32).match(/.{1,4}/g).join(':');
 const hexAsTorV3 = data => encodeBase32({data: data.slice(0, 70)}).base32;
@@ -12,24 +14,34 @@ const tor3HexLength = 74;
 /** Decode an encoded socket
 
   {
+    [dns]: <Hex Encoded DNS Hostname Socket String>
     [ip4]: <Hex Encoded IpV4 Socket String>
     [ip6]: <Hex Encoded IpV6 Socket String>
     [tor3]: <Hex Encoded TorV3 Socket String>
   }
 
+  @throws
+  <ExpectedSocketDataToDecodeSocket Error>
+  <ExpectedOnlyOneSocketTypeToDecode Error>
+  <ExpectedSocketDataWithPortToDecodeSocket Error>
+  <UnexpectedLengthForDnsSocketData Error>
+  <UnexpectedLengthForIpV4SocketData Error>
+  <UnexpectedLengthForIpV6SocketData Error>
+  <UnexpectedLengthForTorV3SocketData Error>
+
   @returns
   {
-    [socket]: <Connection Socket String>
+    socket: <Connection Socket String>
   }
 */
-module.exports = ({ip4, ip6, tor3}) => {
-  const data = ip4 || ip6 || tor3;
+module.exports = ({dns, ip4, ip6, tor3}) => {
+  const data = dns || ip4 || ip6 || tor3;
 
   if (!data) {
-    throw new Error('ExectedSocketDataToDecodeSocket');
+    throw new Error('ExpectedSocketDataToDecodeSocket');
   }
 
-  const [, other] = [ip4, ip6, tor3].filter(n => !!n);
+  const [, other] = [dns, ip4, ip6, tor3].filter(n => !!n);
 
   if (!!other) {
     throw new Error('ExpectedOnlyOneSocketTypeToDecode');
@@ -41,6 +53,10 @@ module.exports = ({ip4, ip6, tor3}) => {
 
   // Read the port number as a UInt16 off of the end
   const port = portFromData(data);
+
+  if (!!dns && dns.length !== dnsHexLength(dns)) {
+    throw new Error('UnexpectedLengthForDnsSocketData');
+  }
 
   if (!!ip4 && ip4.length !== ip4HexLength) {
     throw new Error('UnexpectedLengthForIpV4SocketData');
@@ -54,7 +70,9 @@ module.exports = ({ip4, ip6, tor3}) => {
     throw new Error('UnexpectedLengthForTorV3SocketData');
   }
 
-  if (!!ip4) {
+  if (!!dns) {
+    return {socket: `${hexAsHostname(dns)}:${port}`};
+  } else if (!!ip4) {
     return {socket: `${hexAsIpV4(ip4)}:${port}`};
   } else if (!!ip6) {
     return {socket: `${hexAsIpV6(ip6)}:${port}`};

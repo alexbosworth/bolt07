@@ -1,5 +1,3 @@
-const BN = require('bn.js');
-
 const {blockIndexByteLen} = require('./constants');
 const {blockIndexOffset} = require('./constants');
 const {chanDelimiter} = require('./constants');
@@ -9,6 +7,11 @@ const {heightByteLen} = require('./constants');
 const {heightByteOffset} = require('./constants');
 const {outputIndexByteLen} = require('./constants');
 const {rawChanIdByteLen} = require('./constants');
+
+const bufferAsHex = buffer => buffer.toString('hex');
+const maxBlockHeight = 16777215;
+const maxBlockIndex = 16777215;
+const maxOutputIndex = 65535;
 
 /** Encode a short channel id from components
 
@@ -20,7 +23,10 @@ const {rawChanIdByteLen} = require('./constants');
 
   @throws
   <ExpectedBlockHeightForChannelId Error>
+  <ExpectedBlockHeightWithinRangeForChannelId Error>
   <ExpectedBlockIndexForChannelId Error>
+  <ExpectedBlockIndexWithinRangeForChannelId Error>
+  <ExpectedOutputIndexWithinRangeForChannelId Error>
   <ExpectedTransactionOutputIndexForChannelId Error>
 
   @returns
@@ -35,12 +41,24 @@ module.exports = args => {
     throw new Error('ExpectedBlockHeightForChannelId');
   }
 
+  if (args.block_height > maxBlockHeight) {
+    throw new Error('ExpectedBlockHeightWithinRangeForChannelId');
+  }
+
   if (args.block_index === undefined) {
     throw new Error('ExpectedBlockIndexForChannelId');
   }
 
+  if (args.block_index > maxBlockIndex) {
+    throw new Error('ExpectedBlockIndexWithinRangeForChannelId');
+  }
+
   if (args.output_index === undefined) {
     throw new Error('ExpectedTransactionOutputIndexForChannelId');
+  }
+
+  if (args.output_index > maxOutputIndex) {
+    throw new Error('ExpectedOutputIndexWithinRangeForChannelId');
   }
 
   const channel = [
@@ -70,7 +88,7 @@ module.exports = args => {
 
   return {
     channel,
-    id: id.toString('hex'),
-    number: new BN(id).toString(decBase),
+    id: bufferAsHex(id),
+    number: id.readBigUInt64BE().toString(decBase),
   };
 };

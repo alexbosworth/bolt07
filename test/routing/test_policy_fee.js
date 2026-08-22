@@ -36,6 +36,24 @@ const tests = [
   },
   {
     args: {
+      inbound: {},
+      mtokens: '999999',
+      policy: {base_fee_mtokens: '10', fee_rate: 1},
+    },
+    description: 'Fee rate remainder below one millionth is floored away',
+    expected: {fee_mtokens: '10'},
+  },
+  {
+    args: {
+      inbound: {},
+      mtokens: '1500000',
+      policy: {base_fee_mtokens: '1', fee_rate: 3},
+    },
+    description: 'Fee rate division with a remainder is floored',
+    expected: {fee_mtokens: '5'},
+  },
+  {
+    args: {
       inbound: {inbound_base_discount_mtokens: '1', inbound_rate_discount: 1},
       mtokens: '1000000',
       policy: {base_fee_mtokens: '1', fee_rate: 1},

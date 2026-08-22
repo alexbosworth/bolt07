@@ -1,10 +1,11 @@
-const BN = require('bn.js');
-
 const {chanDelimiter} = require('./constants');
 const {decBase} = require('./constants');
-const {endian} = require('./constants');
 const encodeChanId = require('./encode_chan_id');
 const {rawChanIdByteLen} = require('./constants');
+
+const bufferAsHex = buffer => buffer.toString('hex');
+const isNumeric = n => /^\d+$/.test(n);
+const maxNumericValue = BigInt(2 ** (8 * rawChanIdByteLen)) - BigInt(1);
 
 /** Raw channel id
 
@@ -14,7 +15,9 @@ const {rawChanIdByteLen} = require('./constants');
   }
 
   @throws
-  <Error>
+  <ExpectedChannelIdInNumericFormat Error>
+  <ExpectedNumericValueForChannelId Error>
+  <ExpectedNumberWithinRangeForChannelId Error>
 
   @returns
   {
@@ -26,12 +29,20 @@ module.exports = ({channel, number}) => {
     throw new Error('ExpectedChannelIdInNumericFormat');
   }
 
-  if (!!number) {
-    const rawId = new BN(number, decBase);
+  if (!!number && !isNumeric(number)) {
+    throw new Error('ExpectedNumericValueForChannelId');
+  }
 
-    return {
-      id: rawId.toArrayLike(Buffer, endian, rawChanIdByteLen).toString('hex'),
-    };
+  if (!!number && BigInt(number) > maxNumericValue) {
+    throw new Error('ExpectedNumberWithinRangeForChannelId');
+  }
+
+  if (!!number) {
+    const rawId = Buffer.alloc(rawChanIdByteLen);
+
+    rawId.writeBigUInt64BE(BigInt(number));
+
+    return {id: bufferAsHex(rawId)};
   } else {
     const [height, blockIndex, outputindex] = channel.split(chanDelimiter);
 
@@ -44,4 +55,3 @@ module.exports = ({channel, number}) => {
     return {id};
   }
 };
-

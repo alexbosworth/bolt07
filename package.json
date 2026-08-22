@@ -6,10 +6,10 @@
   "bugs": {
     "url": "https://github.com/alexbosworth/bolt07/issues"
   },
-  "dependencies": {
-    "bn.js": "5.2.3"
-  },
   "description": "Utilities for working with bolt07 data formats",
+  "engines": {
+    "node": ">=22"
+  },
   "keywords": [
     "bolt",
     "channel-id",
@@ -23,10 +23,10 @@
   "name": "bolt07",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alexbosworth/bolt07.git"
+    "url": "git+https://github.com/alexbosworth/bolt07.git"
   },
   "scripts": {
-    "test": "npx nyc@17.1 node --experimental-test-coverage --test"
+    "test": "node --experimental-test-coverage --test"
   },
-  "version": "1.9.5"
+  "version": "2.0.0"
 }

@@ -1,5 +1,15 @@
 # Versions
 
+## 2.0.0
+
+- `decodeSocket`: Add support for decoding type 5 DNS hostname sockets
+- `encodeSocket`: Add support for encoding type 5 DNS hostname sockets
+- `encodeSocket`: Fix encoding of zero compressed and bracketed ip v6 sockets
+
+### Breaking Changes
+
+- Node 22 or higher is now required
+
 ## 1.9.5
 
 - `hopsFromChannels`, `routeFromChannels`, `routeFromHops`: Add support for

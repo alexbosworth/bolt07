@@ -31,9 +31,34 @@ const tests = [
     expected: {id: 'f42400000000000a'},
   },
   {
+    args: {number: '18446744073709551615'},
+    description: 'Maximum value channel id number',
+    expected: {id: 'ffffffffffffffff'},
+  },
+  {
+    args: {number: '0'},
+    description: 'Minimum value channel id number',
+    expected: {id: '0000000000000000'},
+  },
+  {
     args: {},
     description: 'Number is required',
     error: 'ExpectedChannelIdInNumericFormat',
+  },
+  {
+    args: {number: 'number'},
+    description: 'Number must be numeric',
+    error: 'ExpectedNumericValueForChannelId',
+  },
+  {
+    args: {number: '-1'},
+    description: 'Number must not be negative',
+    error: 'ExpectedNumericValueForChannelId',
+  },
+  {
+    args: {number: '18446744073709551616'},
+    description: 'Number must fit within eight bytes',
+    error: 'ExpectedNumberWithinRangeForChannelId',
   },
 ];
 

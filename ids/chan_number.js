@@ -1,7 +1,8 @@
-const BN = require('bn.js');
-
 const {decBase} = require('./constants');
 const rawChanId = require('./raw_chan_id');
+const {rawChanIdByteLen} = require('./constants');
+
+const hexAsBuffer = hex => Buffer.from(hex, 'hex');
 
 /** Channel id in numeric format
 
@@ -12,6 +13,7 @@ const rawChanId = require('./raw_chan_id');
 
   @throws
   <ExpectedChannelIdOrComponentsToConvertToNumber Error>
+  <UnexpectedLengthOfShortChannelId Error>
 
   @returns
   {
@@ -23,7 +25,11 @@ module.exports = ({channel, id}) => {
     throw new Error('ExpectedChannelIdOrComponentsToConvertToNumber');
   }
 
-  const rawId = id || rawChanId({channel}).id;
+  if (!!id && hexAsBuffer(id).length !== rawChanIdByteLen) {
+    throw new Error('UnexpectedLengthOfShortChannelId');
+  }
 
-  return {number: new BN(Buffer.from(rawId, 'hex')).toString(decBase)};
+  const rawId = hexAsBuffer(id || rawChanId({channel}).id);
+
+  return {number: rawId.readBigUInt64BE().toString(decBase)};
 };
